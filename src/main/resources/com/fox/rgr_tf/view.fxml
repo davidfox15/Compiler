@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fox.rgr_tf.ViewController">
    <children>
@@ -23,7 +19,7 @@
                                     <Insets top="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <TextArea fx:id="textAreaInput" prefHeight="260.0" prefWidth="520.0">
+                              <TextArea fx:id="textAreaInput" prefHeight="260.0" prefWidth="520.0" text="45 := (b + c)/(5.76*32);">
                                  <VBox.margin>
                                     <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
                                  </VBox.margin>
@@ -41,10 +37,11 @@
                      <children>
                         <HBox prefHeight="370.0" prefWidth="600.0">
                            <children>
-                              <TableView prefHeight="370.0" prefWidth="600.0">
+                              <TableView fx:id="tableLexem" prefHeight="370.0" prefWidth="600.0">
                                 <columns>
-                                  <TableColumn prefWidth="300.0" text="Имя" />
-                                  <TableColumn prefWidth="298.0" text="Описание" />
+                                    <TableColumn fx:id="columnId" prefWidth="49.0" text="№" />
+                                  <TableColumn fx:id="columnLexem" prefWidth="253.0" text="Идентификатор" />
+                                  <TableColumn fx:id="columnType" prefWidth="371.0" text="Тип" />
                                 </columns>
                               </TableView>
                            </children>
