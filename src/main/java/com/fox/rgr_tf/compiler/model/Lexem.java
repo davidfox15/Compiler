@@ -1,9 +1,15 @@
-package com.fox.rgr_tf.compiler;
+package com.fox.rgr_tf.compiler.model;
 
 public class Lexem {
+
     private int id;
     private String name;
     private String type;
+
+    public Lexem(String name,String type){
+        this.name = name;
+        this.type = type;
+    }
 
     public Lexem(int id, String name, String type) {
         this.id = id;
