@@ -53,10 +53,6 @@ public class Node {
         this.parent = parent;
     }
 
-    public boolean isNullableChild() {
-        return left == null || right == null;
-    }
-
     @Override
     public String toString() {
         String out = "";

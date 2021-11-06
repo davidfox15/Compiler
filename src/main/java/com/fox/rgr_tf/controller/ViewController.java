@@ -1,10 +1,7 @@
 package com.fox.rgr_tf.controller;
 
-import com.fox.rgr_tf.compiler.exceptions.Syntax;
-import com.fox.rgr_tf.compiler.exceptions.SyntaxException;
 import com.fox.rgr_tf.compiler.model.Lexeme;
 import com.fox.rgr_tf.compiler.CodeParser;
-import com.fox.rgr_tf.compiler.tree.MTree;
 import com.fox.rgr_tf.compiler.tree.Tree;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,9 +11,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ViewController {
     // Таблица лексем
@@ -75,27 +69,18 @@ public class ViewController {
     public TextArea generateTextField;
 
     private void generateCode() {
-        //Tree tree = new Tree().getTreeForExp(CodeParser.getLexemeTable());
-        //tree.setCmp(false);
-        MTree tree = new MTree();
-        tree.createTree(CodeParser.getLexemeTable(),tree.getRoot());
-        generateTextField.setText(tree.toString());
+        String str = CodeParser.generateTrees();
+        generateTextField.setText(str);
     }
 
 
     public void buttonClick(MouseEvent mouseEvent) {
         if (!textAreaInput.getText().isBlank()) {
             String code = textAreaInput.getText();
-            CodeParser.parseLexem(code);
-            try {
-                Syntax.syntaxAnalysis(CodeParser.getLexemeTable());
-            } catch (SyntaxException e) {
-                e.printStackTrace();
-            }
+            CodeParser.parseLexeme(code);
             createLexemTable();
             createHashTable();
             generateCode();
-
         }
     }
 }

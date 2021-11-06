@@ -1,6 +1,7 @@
 package com.fox.rgr_tf.compiler;
 
 import com.fox.rgr_tf.compiler.model.Lexeme;
+import com.fox.rgr_tf.compiler.tree.Tree;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,55 +12,59 @@ import java.util.regex.Pattern;
 public class CodeParser {
     private static HashMap<String, String> Hash;
     private static List<Lexeme> lexemeTable;
+    private static List<Tree> trees;
 
-    private static String regexLine = "(\\w+\\.?\\d*)|:=|([+/*<=>-])|[{}()]|;";
+    private static final String regexLine = "(\\w+\\.?\\d*)|:=|([+/*<=>-])|[{}()]|;";
     // Разделение кода над блоки
-    private static String regexBlocks = "(\\w|:=|\\d.\\d||[{}()+/*<=>-]|[ ]*)*[;{}]";
+    private static final String regexBlocks = "(\\w|:=|\\d.\\d||[{}()+/*<=>-]|[ ]*)*[;{}]";
 
-    private static void tableAdd(String lexem, String type) {
-        lexemeTable.add(new Lexeme(lexemeTable.size(), lexem, type));
-        Hash.put(lexem, type);
+    private static void tableAdd(String lexeme, String type) {
+        lexemeTable.add(new Lexeme(lexemeTable.size(), lexeme, type));
+        Hash.put(lexeme, type);
     }
 
-    public static void findType(String lexem) {
+    public static void findType(String lexeme) {
         // Проверка на число или переменную
-        if (lexem.matches("\\d+\\.?\\d*")) {
+        if (lexeme.matches("\\d+\\.?\\d*")) {
             // Проверка на содержание точки
-            if (lexem.contains("."))
-                tableAdd(lexem, "DOUBLE");
+            if (lexeme.contains("."))
+                tableAdd(lexeme, "DOUBLE");
             else
-                tableAdd(lexem, "INT");
+                tableAdd(lexeme, "INT");
             return;
-        } else if (lexem.matches("[A-Za-z]+\\w*")) {
-            tableAdd(lexem, "VALUE");
+        } else if (lexeme.matches("[A-Za-z]+\\w*")) {
+            if(lexeme.equals("while")||lexeme.equals("do"))
+                tableAdd(lexeme, "LOOP");
+            else
+                tableAdd(lexeme, "VALUE");
             return;
         }
         // Проверка на оператор
-        if (lexem.matches("[+/*<=>-]")) {
-            tableAdd(lexem, "OPERATOR");
+        if (lexeme.matches("[+/*<=>-]")) {
+            tableAdd(lexeme, "OPERATOR");
             return;
         }
-        if (lexem.matches("[{}]")) {
-            tableAdd(lexem, "BLOCKS");
+        if (lexeme.matches("[{}]")) {
+            tableAdd(lexeme, "BLOCKS");
             return;
         }
-        if (lexem.matches("[()]")) {
-            tableAdd(lexem, "BRACKET");
+        if (lexeme.matches("[()]")) {
+            tableAdd(lexeme, "BRACKET");
             return;
         }
-        if (lexem.equals(";")) {
-            tableAdd(lexem, "END_OPERATOR");
+        if (lexeme.equals(";")) {
+            tableAdd(lexeme, "END_OPERATOR");
             return;
         }
-        if (lexem.equals(":=")) {
-            tableAdd(lexem, "OPERATOR");
+        if (lexeme.equals(":=")) {
+            tableAdd(lexeme, "OPERATOR");
             return;
         } else {
             System.out.println("Not find type of object!!!");
         }
     }
 
-    public static void parseLexem(String code) {
+    public static void parseLexeme(String code) {
         lexemeTable = new ArrayList<>();
         Hash = new HashMap<>();
         // Создаем шаблон с помощью РВ
@@ -82,5 +87,38 @@ public class CodeParser {
 
     public static List<Lexeme> getLexemeTable() {
         return lexemeTable;
+    }
+
+    private static void addTOTrees(int begin,int i){
+        Tree tree = new Tree();
+        tree.createTree(lexemeTable.subList(begin,i));
+        trees.add(tree);
+    }
+    public static String generateTrees() {
+        trees = new ArrayList<>();
+        int begin=0;
+        for(int i=0;i<lexemeTable.size();i++){
+            if(lexemeTable.get(i).getLexeme().equals("{")){
+                addTOTrees(begin,i);
+                begin = i+1;
+                continue;
+            }
+            if(lexemeTable.get(i).getLexeme().equals(";")){
+                addTOTrees(begin,i);
+                begin = i+1;
+                continue;
+            }
+            if(lexemeTable.get(i).getLexeme().equals("}")){
+                addTOTrees(begin,i);
+                begin = i+1;
+                continue;
+            }
+        }
+        String str="";
+        for (Tree tree :
+                trees) {
+            str += "\n" + tree;
+        }
+        return str;
     }
 }

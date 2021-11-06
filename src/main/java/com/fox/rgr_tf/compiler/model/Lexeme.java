@@ -58,4 +58,9 @@ public class Lexeme {
         if (type.equals("INT") || type.equals("DOUBLE")) return true;
         else return false;
     }
+
+    public boolean isLoop(){
+        if(type.equals("LOOP")) return true;
+        else return false;
+    }
 }
