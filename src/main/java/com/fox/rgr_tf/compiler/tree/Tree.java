@@ -20,7 +20,8 @@ public class Tree {
         if(lexemes.size()==1){
             current.setValue(lexemes.get(0));
         } else {
-            for (Lexeme tlexeme : lexemes) {
+            for (int i = 0; i<lexemes.size();i++) {
+                Lexeme tlexeme = lexemes.get(i);
                 if (tlexeme.isLoop()) {
                     current.setValue(tlexeme);
                     continue;
@@ -37,8 +38,11 @@ public class Tree {
                     continue;
                 }
                 if (tlexeme.isVal() || tlexeme.isNumber()) {
-                    if (root == current.getParent())
+                    if (root == current)
                         current.setLeft(new Node(tlexeme, current));
+                    else if(lexemes.size()-i>2&&lexemes.get(i+1).isOperator()){
+                        current.setLeft(new Node(tlexeme, current));
+                    }
                     else {
                         current.setValue(tlexeme);
                         current = current.getParent();
@@ -49,7 +53,6 @@ public class Tree {
                     current = current.getParent();
                     continue;
                 }
-
             }
         }
     }

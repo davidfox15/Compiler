@@ -63,4 +63,9 @@ public class Lexeme {
         if(type.equals("LOOP")) return true;
         else return false;
     }
+
+    public boolean isHighOperator() {
+        if(name.equals("*")||name.equals("/")||name.equals(":=")) return true;
+        else return false;
+    }
 }

@@ -33,7 +33,7 @@ public class CodeParser {
                 tableAdd(lexeme, "INT");
             return;
         } else if (lexeme.matches("[A-Za-z]+\\w*")) {
-            if(lexeme.equals("while")||lexeme.equals("do"))
+            if (lexeme.equals("while") || lexeme.equals("do"))
                 tableAdd(lexeme, "LOOP");
             else
                 tableAdd(lexeme, "VALUE");
@@ -89,32 +89,37 @@ public class CodeParser {
         return lexemeTable;
     }
 
-    private static void addTOTrees(int begin,int i){
+    public static List<Tree> getTrees() {
+        return trees;
+    }
+
+    private static void addTOTrees(int begin, int i) {
         Tree tree = new Tree();
-        tree.createTree(lexemeTable.subList(begin,i));
+        tree.createTree(lexemeTable.subList(begin, i));
         trees.add(tree);
     }
+
     public static String generateTrees() {
         trees = new ArrayList<>();
-        int begin=0;
-        for(int i=0;i<lexemeTable.size();i++){
-            if(lexemeTable.get(i).getLexeme().equals("{")){
-                addTOTrees(begin,i);
-                begin = i+1;
+        int begin = 0;
+        for (int i = 0; i < lexemeTable.size(); i++) {
+            if (lexemeTable.get(i).getLexeme().equals("{")) {
+                addTOTrees(begin, i);
+                begin = i + 1;
                 continue;
             }
-            if(lexemeTable.get(i).getLexeme().equals(";")){
-                addTOTrees(begin,i);
-                begin = i+1;
+            if (lexemeTable.get(i).getLexeme().equals(";")) {
+                addTOTrees(begin, i);
+                begin = i + 1;
                 continue;
             }
-            if(lexemeTable.get(i).getLexeme().equals("}")){
-                addTOTrees(begin,i);
-                begin = i+1;
+            if (lexemeTable.get(i).getLexeme().equals("}")) {
+                addTOTrees(begin, i);
+                begin = i + 1;
                 continue;
             }
         }
-        String str="";
+        String str = "";
         for (Tree tree :
                 trees) {
             str += "\n" + tree;

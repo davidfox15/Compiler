@@ -1,5 +1,6 @@
 package com.fox.rgr_tf.controller;
 
+import com.fox.rgr_tf.compiler.generator.Codegenerator;
 import com.fox.rgr_tf.compiler.model.Lexeme;
 import com.fox.rgr_tf.compiler.CodeParser;
 import com.fox.rgr_tf.compiler.tree.Tree;
@@ -67,10 +68,15 @@ public class ViewController {
 
     @FXML
     public TextArea generateTextField;
+    @FXML
+    public TextArea TreeTextField;
 
     private void generateCode() {
         String str = CodeParser.generateTrees();
-        generateTextField.setText(str);
+        TreeTextField.setText(str);
+        for (Tree tree : CodeParser.getTrees()) {
+            Codegenerator.generateCode(tree.getRoot(),-1);
+        }
     }
 
 
