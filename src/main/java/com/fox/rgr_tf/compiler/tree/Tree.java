@@ -2,6 +2,7 @@ package com.fox.rgr_tf.compiler.tree;
 
 import com.fox.rgr_tf.compiler.model.Lexeme;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -41,7 +42,7 @@ public class Tree {
                     continue;
                 }
                 if (tlexeme.isVal() || tlexeme.isNumber()) {
-                    if (lexemes.size() - i > 1 && !lexemes.get(i+1).getLexeme().equals(")"))
+                    if (lexemes.size() - i > 1 && !lexemes.get(i + 1).getLexeme().equals(")"))
                         current.setLeft(new Node(tlexeme, current));
                     else {
                         current.setValue(tlexeme);
@@ -51,8 +52,7 @@ public class Tree {
                 }
                 if (tlexeme.getLexeme().equals(")")) {
                     current = current.getParent();
-                    if(lexemes.size() - i <= 1)
-                    {
+                    if (lexemes.size() - i <= 1) {
                         Node tmp = current.getLeft();
                         current = current.getParent();
                         current.setRight(tmp);
@@ -73,19 +73,20 @@ public class Tree {
             return null;
         if (lexemes.size() == 1) {
             current.setValue(lexemes.get(0));
+            root = current;
         } else {
             for (int i = 0; i < lexemes.size(); i++) {
                 Lexeme tlexeme = lexemes.get(i);
-                if(tlexeme.getLexeme().equals(":="))
-                {
+                if (tlexeme.getLexeme().equals(":=")) {
                     root = troot;
                     current.setValue(tlexeme);
-                    lexemes = lexemes.subList(i+1, lexemes.size());
-                    current.setRight(newTree(reverseList(lexemes,i)));
-                    return root;
+                    lexemes = lexemes.subList(i + 1, lexemes.size());
+                    current.setRight(newTree(reverseList(lexemes, i)));
+                    root = troot;
+                    return troot;
                 }
                 if (tlexeme.isVal() || tlexeme.isNumber()) {
-                    if (lexemes.size() - i > 1 && !lexemes.get(i+1).getLexeme().equals(")"))
+                    if (lexemes.size() - i > 1 && !lexemes.get(i + 1).getLexeme().equals(")"))
                         current.setLeft(new Node(tlexeme, current));
                     else {
                         current.setValue(tlexeme);
@@ -100,11 +101,12 @@ public class Tree {
                 }
                 if (tlexeme.getLexeme().equals(")")) {
                     current = current.getParent();
-                    if(lexemes.size() - i <= 1)
-                    {
-                        Node tmp = current.getLeft();
-                        current = current.getParent();
-                        current.setRight(tmp);
+                    if (lexemes.size() - i <= 1) {
+                        if (current.getParent()!=root) {
+                            Node tmp = current.getLeft();
+                            current = current.getParent();
+                            current.setRight(tmp);
+                        }
                     }
                     continue;
                 }
@@ -114,18 +116,23 @@ public class Tree {
                     current = current.getRight();
                     continue;
                 }
-
-
+                if (tlexeme.getLexeme().equals("while")) {
+                    current.setValue(tlexeme);
+                }
             }
         }
+        root=troot;
         return troot;
     }
 
-    private List<Lexeme> reverseList(List<Lexeme> lexemes,int i){
+    private List<Lexeme> reverseList(List<Lexeme> lexemes, int i) {
         Collections.reverse(lexemes);
         for (Lexeme lex :
                 lexemes) {
-            if (lex.getLexeme().equals(")")){ lex.setName("("); continue;}
+            if (lex.getLexeme().equals(")")) {
+                lex.setName("(");
+                continue;
+            }
             if (lex.getLexeme().equals("(")) lex.setName(")");
         }
         return lexemes;
@@ -133,6 +140,19 @@ public class Tree {
 
     public Node getRoot() {
         return root;
+    }
+
+    private List<Lexeme> l = new ArrayList<>();
+    public List<Lexeme> toList(){
+        List<Lexeme> lexemes = new ArrayList<>();
+        Node n = root;
+        recPreOrder(n);
+        return l;
+    }
+    public void recPreOrder(Node n){
+        if (n.getLeft()!=null) recPreOrder(n.getLeft());
+        l.add(n.getValue());
+        if (n.getRight()!=null) recPreOrder(n.getRight());
     }
 
     @Override
