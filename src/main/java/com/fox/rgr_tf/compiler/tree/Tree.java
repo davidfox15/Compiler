@@ -39,7 +39,7 @@ public class Tree {
                     continue;
                 }
                 if (tlexeme.isVal() || tlexeme.isNumber()) {
-                    if (lexemes.size() - i > 1)
+                    if (lexemes.size() - i > 1 && !lexemes.get(i+1).getLexeme().equals(")"))
                         current.setLeft(new Node(tlexeme, current));
                     else {
                         current.setValue(tlexeme);
