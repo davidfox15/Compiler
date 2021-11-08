@@ -85,7 +85,7 @@ public class Tree {
                     return root;
                 }
                 if (tlexeme.isVal() || tlexeme.isNumber()) {
-                    if (lexemes.size() - i > 1 && !lexemes.get(i+1).getLexeme().equals("("))
+                    if (lexemes.size() - i > 1 && !lexemes.get(i+1).getLexeme().equals(")"))
                         current.setLeft(new Node(tlexeme, current));
                     else {
                         current.setValue(tlexeme);
@@ -98,13 +98,6 @@ public class Tree {
                     current = current.getLeft();
                     continue;
                 }
-                if (tlexeme.isOperator()) {
-                    current.setValue(tlexeme);
-                    current.setRight(new Node(current));
-                    current = current.getRight();
-                    continue;
-                }
-
                 if (tlexeme.getLexeme().equals(")")) {
                     current = current.getParent();
                     if(lexemes.size() - i <= 1)
@@ -115,6 +108,14 @@ public class Tree {
                     }
                     continue;
                 }
+                if (tlexeme.isOperator()) {
+                    current.setValue(tlexeme);
+                    current.setRight(new Node(current));
+                    current = current.getRight();
+                    continue;
+                }
+
+
             }
         }
         return troot;
