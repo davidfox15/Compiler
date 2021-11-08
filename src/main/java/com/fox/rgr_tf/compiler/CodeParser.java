@@ -40,7 +40,7 @@ public class CodeParser {
             return;
         }
         // Проверка на оператор
-        if (lexeme.matches("[+/*<=>-]")) {
+        if (lexeme.matches("[+/*-]")) {
             tableAdd(lexeme, "OPERATOR");
             return;
         }
@@ -56,7 +56,7 @@ public class CodeParser {
             tableAdd(lexeme, "END_OPERATOR");
             return;
         }
-        if (lexeme.equals(":=")) {
+        if (lexeme.equals("=")) {
             tableAdd(lexeme, "OPERATOR");
             return;
         } else {

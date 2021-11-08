@@ -25,7 +25,11 @@
                                     <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
                                  </VBox.margin>
                               </TextArea>
-                              <Button mnemonicParsing="false" onMouseClicked="#buttonClick" text="Создать таблицы" />
+                              <Button mnemonicParsing="false" onMouseClicked="#buttonClick" prefWidth="130.0" text="Создать таблицы" />
+                              <Button fx:id="createCode" mnemonicParsing="false" onMouseClicked="#buttonCreateCode" prefWidth="130.0" text="Создать код">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" top="20.0" />
+                                 </VBox.margin></Button>
                            </children>
                         </VBox>
                      </children>
@@ -86,13 +90,14 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <VBox prefHeight="371.0" prefWidth="600.0">
+                        <VBox alignment="CENTER" prefHeight="371.0" prefWidth="600.0">
                            <children>
                               <TextArea fx:id="generateTextField" prefHeight="260.0">
                                  <VBox.margin>
                                     <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
                                  </VBox.margin>
                               </TextArea>
+                              <Button fx:id="optimizeCode" mnemonicParsing="false" onMouseClicked="#buttonOptimizeCode" prefWidth="130.0" text="Optimize" />
                            </children>
                         </VBox>
                      </children>
