@@ -91,7 +91,7 @@ public class CodeParser {
 
     private static void addTOTrees(int begin,int i){
         Tree tree = new Tree();
-        tree.createTree(lexemeTable.subList(begin,i));
+        tree.newTree(lexemeTable.subList(begin,i));
         trees.add(tree);
     }
     public static String generateTrees() {
