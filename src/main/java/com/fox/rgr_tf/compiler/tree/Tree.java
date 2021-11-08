@@ -14,13 +14,14 @@ public class Tree {
         root.setParent(root);
     }
 
-    public void createTree(List<Lexeme> lexemes){
-        if(lexemes.size()==0)
+    public void createTree(List<Lexeme> lexemes) {
+        System.out.println(lexemes);
+        if (lexemes.size() == 0)
             return;
-        if(lexemes.size()==1){
+        if (lexemes.size() == 1) {
             current.setValue(lexemes.get(0));
         } else {
-            for (int i = 0; i<lexemes.size();i++) {
+            for (int i = 0; i < lexemes.size(); i++) {
                 Lexeme tlexeme = lexemes.get(i);
                 if (tlexeme.isLoop()) {
                     current.setValue(tlexeme);
@@ -38,11 +39,8 @@ public class Tree {
                     continue;
                 }
                 if (tlexeme.isVal() || tlexeme.isNumber()) {
-                    if (root == current)
+                    if (lexemes.size() - i > 1)
                         current.setLeft(new Node(tlexeme, current));
-                    else if(lexemes.size()-i>2&&lexemes.get(i+1).isOperator()){
-                        current.setLeft(new Node(tlexeme, current));
-                    }
                     else {
                         current.setValue(tlexeme);
                         current = current.getParent();
@@ -53,16 +51,17 @@ public class Tree {
                     current = current.getParent();
                     continue;
                 }
+
             }
         }
     }
 
-    public Node getRoot(){
+    public Node getRoot() {
         return root;
     }
 
     @Override
     public String toString() {
-        return "MTree\n "+ root;
+        return "MTree\n " + root;
     }
 }
