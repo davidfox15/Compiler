@@ -180,7 +180,7 @@ public class Code {
             String el = lexemes.get(i).getLexeme();
             switch (el) {
                 case "<":
-                    builder.append("CMP " + elID + "\n");
+                    builder.append("CMP " + lexemes.get(i - 1).getLexeme() + "\n");
                     break;
                 case "do":
                     builder.append("loop;\n");
@@ -219,49 +219,53 @@ public class Code {
     }
 
     public static String getOptCode(List<Lexeme> lexemes) {
-        //System.out.println("STEP\n");
+        String str="";
+        System.out.println("STEP\n");
         int elID = 1;
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < lexemes.size(); i++) {
-            //System.out.println(lexemes.get(i).getLexeme());
             String el = lexemes.get(i).getLexeme();
+            System.out.println(el);
             switch (el) {
                 case "<":
-                    builder.append("CMP " + elID + "\n");
+                    i++;
+                    builder.append("CMP " + lexemes.get(i).getLexeme() + "\n");
                     break;
                 case "do":
                     builder.append("loop;\n");
                     break;
                 case "while":
-                    builder.append("JGE loop;\n");
+                    str="JGE loop;\n";
                     break;
                 case "+":
-                    builder.append("ADD $" + elID + "\n");
+                    i++;
+                    builder.append("ADD " + lexemes.get(i).getLexeme() + "\n");
                     break;
                 case "*":
-                    builder.append("MPY $" + elID + "\n");
+                    i++;
+                    builder.append("MPY " + lexemes.get(i).getLexeme() + "\n");
                     break;
                 case "-":
-                    builder.append("SUB $" + elID + "\n");
+                    i++;
+                    builder.append("SUB " + lexemes.get(i).getLexeme() + "\n");
                     break;
                 case "/":
-                    builder.append("DIV $" + elID + "\n");
+                    i++;
+                    builder.append("DIV " + lexemes.get(i).getLexeme() + "\n");
                     break;
                 case ":=":
-                    builder.append("STORE " + lexemes.get(i - 1).getLexeme() + "\n");
+                    i++;
+                    builder.append("STORE " + lexemes.get(i).getLexeme() + "\n");
                     break;
                 default:
                     if (lexemes.get(i).isVal() || lexemes.get(i).isNumber()) {
                         if (i + 1 < lexemes.size() && (!lexemes.get(i + 1).getLexeme().equals(":=")))
                             builder.append("LOAD " + el + "\n");
-                        if (i + 1 < lexemes.size() && (lexemes.get(i + 1).isNumber() || lexemes.get(i + 1).isVal())) {
-                            elID++;
-                            builder.append("STORE $" + elID + "\n");
-                        }
                     }
                     break;
             }
         }
+        builder.append(str);
         return builder.toString();
     }
 }

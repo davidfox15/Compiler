@@ -142,17 +142,30 @@ public class Tree {
         return root;
     }
 
-    private List<Lexeme> l = new ArrayList<>();
+    //private List<Lexeme> l = new ArrayList<>();
     public List<Lexeme> toList(){
         List<Lexeme> lexemes = new ArrayList<>();
         Node n = root;
-        recPreOrder(n);
-        return l;
+        recPreOrder(n,lexemes);
+        return lexemes;
     }
-    public void recPreOrder(Node n){
-        if (n.getRight()!=null) recPreOrder(n.getRight());
-        if (n.getLeft()!=null) recPreOrder(n.getLeft());
-        l.add(n.getValue());
+    public void recPreOrder(Node n, List<Lexeme> lexemes){
+        if (n.getRight()!=null) recPreOrder(n.getRight(),lexemes);
+        if (n.getLeft()!=null) recPreOrder(n.getLeft(),lexemes);
+        lexemes.add(n.getValue());
+    }
+
+    public List<Lexeme> toOptList(){
+        List<Lexeme> lexemes = new ArrayList<>();
+        Node n = root;
+        recOrder(n, lexemes);
+        return lexemes;
+    }
+
+    public void recOrder(Node n,List<Lexeme> lexemes){
+        if (n.getRight()!=null) recOrder(n.getRight(),lexemes);
+        lexemes.add(n.getValue());
+        if (n.getLeft()!=null) recOrder(n.getLeft(),lexemes);
     }
 
     @Override

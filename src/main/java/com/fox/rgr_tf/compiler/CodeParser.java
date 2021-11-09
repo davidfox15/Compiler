@@ -99,12 +99,12 @@ public class CodeParser {
     }
 
     public static String optCode() {
-        String str="";
+        StringBuilder str = new StringBuilder();
         for (Tree tree :trees) {
             if(tree.getRoot().getValue()!=null)
-                str+=Code.getOptCode(tree.toList());
+                str.append(Code.getOptCode(tree.toOptList()));
         }
-        return str;
+        return str.toString();
     }
 
     private static void addTOTrees(int begin, int i) {
