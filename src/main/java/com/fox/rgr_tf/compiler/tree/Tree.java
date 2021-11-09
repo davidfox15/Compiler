@@ -150,9 +150,9 @@ public class Tree {
         return l;
     }
     public void recPreOrder(Node n){
+        if (n.getRight()!=null) recPreOrder(n.getRight());
         if (n.getLeft()!=null) recPreOrder(n.getLeft());
         l.add(n.getValue());
-        if (n.getRight()!=null) recPreOrder(n.getRight());
     }
 
     @Override

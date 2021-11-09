@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -65,19 +66,41 @@
                   </AnchorPane>
               </content>
             </Tab>
-            <Tab text="Generate">
+            <Tab text="Tree">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <VBox prefHeight="371.0" prefWidth="600.0">
                            <children>
-                              <TextArea fx:id="generateTextField" prefHeight="260.0">
+                              <TextArea fx:id="TreeTextField" prefHeight="260.0">
                                  <VBox.margin>
                                     <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
                                  </VBox.margin>
                               </TextArea>
                            </children>
                         </VBox>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Generate">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <HBox alignment="TOP_CENTER" prefHeight="371.0" prefWidth="600.0">
+                           <children>
+                              <TextArea fx:id="GenCodeTextArea" prefHeight="200.0" prefWidth="200.0">
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </HBox.margin>
+                              </TextArea>
+                              <TextArea fx:id="OptCodeTextArea" prefHeight="200.0" prefWidth="200.0">
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </HBox.margin>
+                              </TextArea>
+                           </children>
+                        </HBox>
                      </children>
                   </AnchorPane>
               </content>

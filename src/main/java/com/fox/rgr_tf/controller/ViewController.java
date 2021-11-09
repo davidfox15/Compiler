@@ -67,12 +67,11 @@ public class ViewController {
     }
 
     @FXML
-    public TextArea generateTextField;
-
-    private void generateTree() {
-        String str = CodeParser.generateTrees();
-        generateTextField.setText(str);
-    }
+    public TextArea TreeTextField;
+    @FXML
+    public TextArea GenCodeTextArea;
+    @FXML
+    public TextArea OptCodeTextArea;
 
 
     public void buttonClick(MouseEvent mouseEvent) {
@@ -81,8 +80,9 @@ public class ViewController {
             CodeParser.parseLexeme(code);
             createLexemTable();
             createHashTable();
-            generateTree();
-            CodeParser.genCode();
+            TreeTextField.setText(CodeParser.generateTrees());
+            GenCodeTextArea.setText(CodeParser.genCode());
+            OptCodeTextArea.setText(CodeParser.optCode());
         }
     }
 }

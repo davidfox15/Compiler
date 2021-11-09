@@ -89,11 +89,22 @@ public class CodeParser {
         return lexemeTable;
     }
 
-    public static void genCode() {
+    public static String genCode() {
         String str="";
         for (Tree tree :trees) {
-            Code.getAssembler(tree);
+            if(tree.getRoot().getValue()!=null)
+                str+=Code.getCode(tree.toList());
         }
+        return str;
+    }
+
+    public static String optCode() {
+        String str="";
+        for (Tree tree :trees) {
+            if(tree.getRoot().getValue()!=null)
+                str+=Code.getOptCode(tree.toList());
+        }
+        return str;
     }
 
     private static void addTOTrees(int begin, int i) {
